@@ -41,7 +41,7 @@ IMG_QUEUE_BUF_SIZE = 1
 MAX_STEPS = 2000
 
 # Destination Point
-CHECKPOINT_X = 44.25
+CHECKPOINT_X = -44.25
 CHECKPOINT_Y = -4
 
 # Initial position of the robot
@@ -384,7 +384,7 @@ class MarsEnv(gym.Env):
                 return 0, True # No reward
             
             # Has the Rover reached the destination
-            if self.last_position_x >= CHECKPOINT_X and self.last_position_y >= CHECKPOINT_Y:
+            if math.hypot(CHECKPOINT_X - self.x, CHECKPOINT_Y - self.y) < 1:
                 print("Congratulations! The rover has reached the checkpoint!")
                 multiplier = FINISHED_REWARD
                 reward = (base_reward * multiplier) / self.steps # <-- incentivize to reach checkpoint in fewest steps
